@@ -34,7 +34,7 @@ def get_d(e, phi):
 def is_prime (num):
     if num > 1:
 
-        # Iterate from 2 to n / 2  
+        # Iterate from 2 to n / 2
        for i in range(2, num//2):
            # If num is divisible by any number between
            # 2 and n / 2, it is not prime
@@ -80,15 +80,25 @@ def decrypt(pk, ciphertext):
     plain = chr(pow(ciphertext, pk[0], pk[1]))
     return ''.join(plain)
 
+# Test code for RSA
 if __name__ == '__main__':
-    # pk = generate_keypair(31, 11)
-    # print(pk)
-    # t = "ab"
-    # t = t[0]
-    # print(ord(t))
-    # x = encrypt(pk[0], t)
-    # print(x)
-    # y = decrypt(pk[1], x)
-    # print(y)
-    message = ('public_key: %d %d' % (12, 2))
-    print(message[13])
+    pk = generate_keypair(31, 11)
+    message = "Hello World"
+    print(f"MESSAGE: {message}")
+
+    ciphertext = []
+    for character in message:
+        x = encrypt(pk[0], character)
+        ciphertext.append(x)
+    print(f"CIPHERTEXT: {ciphertext}")
+
+    plaintext = []
+    for character in ciphertext:
+        y = decrypt(pk[1], character)
+        plaintext.append(y)
+        
+    plaintext = ''.join(plaintext)
+    print(f"PLAINTEXT: {plaintext}")
+
+    #message = ('public_key: %d %d' % (12, 2))
+    #print(message[13])
