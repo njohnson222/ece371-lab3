@@ -1,4 +1,4 @@
-import math
+#import math
 import random
 
 
@@ -30,21 +30,21 @@ def get_d(e, phi):
     #     b = b + 1 # b increments
     #     d = (1-(phi*b))/e # quotient is calculated here
     # return d
-    
+
 def is_prime (num):
-    if num > 1: 
-      
+    if num > 1:
+
         # Iterate from 2 to n / 2  
        for i in range(2, num//2):
-           # If num is divisible by any number between  
-           # 2 and n / 2, it is not prime  
-           if (num % i) == 0: 
-               return False 
+           # If num is divisible by any number between
+           # 2 and n / 2, it is not prime
+           if (num % i) == 0:
+               return False
                break
-           else: 
-               return True 
-  
-    else: 
+           else:
+               return True
+
+    else:
         return False
 
 
@@ -70,25 +70,25 @@ def encrypt(pk, plaintext):
     #plaintext is a single character
     #cipher is a decimal number which is the encrypted version of plaintext
     #the pow function is much faster in calculating power compared to the ** symbol !!!
-    arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    m = arr.index(plaintext) #get the ascii of the plaintext
-    cipher = m**pk[0][0] % pk[0][1]
+    cipher = pow(ord(plaintext), pk[0], pk[1])
     return cipher
 
 def decrypt(pk, ciphertext):
     ###################################your code goes here#####################################
     #ciphertext is a single decimal number
     #the returned value is a character that is the decryption of ciphertext
-    arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    plain = ciphertext**pk[1][0] % pk[1][1]
-    plain = arr[int(plain)]
+    plain = chr(pow(ciphertext, pk[0], pk[1]))
     return ''.join(plain)
 
 if __name__ == '__main__':
-    a = generate_keypair(11, 5)
-    t = 'f'
-    print(a)
-    x = encrypt(a, t)
-    print(x)
-    y = decrypt(a, x)
-    print(y)
+    # pk = generate_keypair(31, 11)
+    # print(pk)
+    # t = "ab"
+    # t = t[0]
+    # print(ord(t))
+    # x = encrypt(pk[0], t)
+    # print(x)
+    # y = decrypt(pk[1], x)
+    # print(y)
+    message = ('public_key: %d %d' % (12, 2))
+    print(message[13])
