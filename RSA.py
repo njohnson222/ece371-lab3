@@ -34,7 +34,7 @@ def get_d(e, phi):
 def is_prime (num):
     if num > 1:
 
-        # Iterate from 2 to n / 2  
+        # Iterate from 2 to n / 2
        for i in range(2, num//2):
            # If num is divisible by any number between
            # 2 and n / 2, it is not prime
@@ -79,15 +79,4 @@ def decrypt(pk, ciphertext):
     #the returned value is a character that is the decryption of ciphertext
     plain = chr(pow(ciphertext, pk[0], pk[1]))
     return ''.join(plain)
-
-if __name__ == '__main__':
-    pk = generate_keypair(13, 17)
-    print(pk)
-    t = "ab"
-    t = t[0]
-    print(ord(t))
-    x = encrypt(pk[0], t)
-    print(x)
-    y = decrypt(pk[1], x)
-    print(y)
 
