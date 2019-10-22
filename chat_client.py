@@ -14,8 +14,8 @@ message='hello'
 
 #first generate the keypair
 #get these two numbers from the excel file
-p=1297273
-q=1297651
+p=13
+q=17
 ###################################your code goes here#####################################
 #generate public and private key from the p and q values
 public, private = generate_keypair(p, q)
@@ -28,9 +28,8 @@ while True:
         ###################################your code goes here#####################################
         #message is a string input received from the user, encrypt it with RSA character by character and save in message_encoded
         #message encoded is a list of integer ciphertext values in string format e.g. ['23131','352135','54213513']
-        message_encoded = message
-        for x in range(message):
-                temp = encrypt(public, meesage[x])
-                message_encoded[x] = temp
-        [mySocket.sendto(code.encode(),(SERVER_IP,PORT_NUMBER)) for code in message_encoded]
+        message_encoded = [] 
+        for x in range(len(message)):
+                message_encoded.append(encrypt(private, message[x]))
+        [mySocket.sendto(str(code).encode(),(SERVER_IP,PORT_NUMBER)) for code in message_encoded]
 sys.exit()

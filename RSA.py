@@ -81,14 +81,13 @@ def decrypt(pk, ciphertext):
     return ''.join(plain)
 
 if __name__ == '__main__':
-    # pk = generate_keypair(31, 11)
-    # print(pk)
-    # t = "ab"
-    # t = t[0]
-    # print(ord(t))
-    # x = encrypt(pk[0], t)
-    # print(x)
-    # y = decrypt(pk[1], x)
-    # print(y)
-    message = ('public_key: %d %d' % (12, 2))
-    print(message[13])
+    pk = generate_keypair(13, 17)
+    print(pk)
+    t = "ab"
+    t = t[0]
+    print(ord(t))
+    x = encrypt(pk[0], t)
+    print(x)
+    y = decrypt(pk[1], x)
+    print(y)
+

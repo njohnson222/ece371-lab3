@@ -20,19 +20,15 @@ while True:
             ###################################your code goes here#####################################
             #retrieve public key and private key from the received message (message is a string!)
             key = data.split()
-            public_key_e = key[1]
-            public_key_n = key[2]
+            public_key_e = int(key[1])
+            public_key_n = int(key[2])
             public = (public_key_e, public_key_n)
             print ('public key is : %d, %d'%(public_key_e,public_key_n))
         else:
             cipher=int(data)
-            print (str(cipher)+':')
             ###################################your code goes here#####################################
             #data_decoded is the decoded character based on the received cipher, calculate it using functions in RSA.py
-            data_decoded = data
-            for i in range(data):
-                data_decoded[i] = decrypt(public, data[i])
-            #data_decoded =  'a'
+            data_decoded = decrypt(public, cipher)
             print (data_decoded)
                 #python2: print data
 sys.ext()
