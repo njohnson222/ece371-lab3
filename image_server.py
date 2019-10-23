@@ -38,17 +38,15 @@ while True:
 
         elif data.find('des_key')!=-1: #client has sent their DES key
             ###################################your code goes here####################
-            #read the next 8 bytes for the DES key by running (data,addr) = mySocket.recvfrom(SIZE) 8 times and then decrypting with RSA
-            des_key = data
 
             # Decrypt DES KEY
-            cipher_key = data.split(",")[1:]
+            ciphertext = data.split(",")[1:]
             des_key = ""
-            for num in cipher_key:
+            for num in ciphertext:
                 des_key += RSA.decrypt(public, int(num))
             print(f"DECRYPTED KEY: {des_key}")
 
-            #now we will receive the image from the client
+            # Receive encrypted image bytes from the client
             (data,addr) = mySocket.recvfrom(SIZE)
             #decrypt the image
             ###################################your code goes here####################

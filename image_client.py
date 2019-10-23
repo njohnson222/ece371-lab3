@@ -1,7 +1,8 @@
 import des
 import sys
 from socket import socket, AF_INET, SOCK_DGRAM, gethostbyname
-from RSA import generate_keypair,encrypt,decrypt
+from RSA import generate_keypair, encrypt, decrypt
+from des import nsplit
 import struct
 import time
 
@@ -41,6 +42,7 @@ time.sleep(1)
 #wait_for_ack(mySocket)
 
 ###################################your code goes here#####################################
+
 #encode the DES key with RSA and save in DES_encoded, the value below is just an example
 message_encoded = []
 for x in range(len(des_key)):
@@ -48,7 +50,6 @@ for x in range(len(des_key)):
 print(f"DES KEY ENCODED: {message_encoded}")
 message = ",".join(message_encoded)
 message = f"des_key,{message}"
-print(message)
 mySocket.sendto(message.encode(),(SERVER_IP,PORT_NUMBER))
 
 #read image, encode, send the encoded image binary file
@@ -63,7 +64,7 @@ file.close()
 #r_byte is the final value you will send through socket
 
 # Split image up into chunks of 8 bytes
-image_chunks = nsplit(data, 64)
+image_chunks = nsplit(data, 8)
 for chunk in image_chunks:
     # Send the current chunk
     mySocket.sendto(bytes(chunk),(SERVER_IP,PORT_NUMBER))
