@@ -48,17 +48,19 @@ while True:
 
             # Receive encrypted image bytes from the client
             (data,addr) = mySocket.recvfrom(SIZE)
+            print(data)
+
             #decrypt the image
             ###################################your code goes here####################
             #the received encoded image is in data
             #perform des decryption using des.py
-            #coder=des.des()
-            data = des.decrypt(des_key, data)
+            #   coder=des.des()
+            #data = des.decrypt(des_key, data)
             #the final output should be saved in a byte array called rr_byte
-            rr_byte=bytearray()
+            #rr_byte=bytearray()
             #write to file to make sure it is okay
             file2=open(r'penguin_decrypted.jpg',"wb")
-            file2.write(bytes(rr_byte))
+            file2.write(bytes(data))
             file2.close()
             print ('decypting image completed')
             break

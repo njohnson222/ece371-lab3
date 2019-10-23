@@ -52,6 +52,7 @@ message = ",".join(message_encoded)
 message = f"des_key,{message}"
 mySocket.sendto(message.encode(),(SERVER_IP,PORT_NUMBER))
 
+
 #read image, encode, send the encoded image binary file
 file = open(r'penguin.jpg',"rb")
 data = file.read()
@@ -64,16 +65,11 @@ file.close()
 #r_byte is the final value you will send through socket
 
 # Split image up into chunks of 8 bytes
-image_chunks = nsplit(data, 8)
-for chunk in image_chunks:
-    # Send the current chunk
-    mySocket.sendto(bytes(chunk),(SERVER_IP,PORT_NUMBER))
-
-    # Enter infinite Loop
-    while True:
-        data, addr = mySocket.recvfrom(SIZE)
-        if data.find('OKAY')!=-1: # Client is ready for another chunks
-            break
+# image_chunks = nsplit(data, 8)
+# for chunk in image_chunks:
+#     # Send the current chunk
+#     mySocket.sendto(chunk,(SERVER_IP,PORT_NUMBER))
+mySocket.sendto(data, (SERVER_IP, PORT_NUMBER))
 
 r_byte=bytearray()
 
