@@ -20,17 +20,18 @@ client_public_key=''
 des_key=''
 while True:
         (data,addr) = mySocket.recvfrom(SIZE)
-        data=data.decode()
+        data = data.decode()
         if data.find('public_key')!=-1: #client has sent their public key\
             ###################################your code goes here#####################################
             #retrieve public key and private key from the received message (message is a string!)
-            public_key_e=0
-            public_key_n=0
+            public_key = split(data)
+            public_key_e = public[0]
+            public_key_n = public[1]
             print ('public key is : %d, %d'%(public_key_e,public_key_n))
         elif data.find('des_key')!=-1: #client has sent their DES key
             ###################################your code goes here####################
             #read the next 8 bytes for the DES key by running (data,addr) = mySocket.recvfrom(SIZE) 8 times and then decrypting with RSA
-            des_key='dummyval'
+            des_key = data
             print ('DES key is :' + des_key)
             #now we will receive the image from the client
             (data,addr) = mySocket.recvfrom(SIZE)
@@ -39,6 +40,7 @@ while True:
             #the received encoded image is in data
             #perform des decryption using des.py
             #coder=des.des()
+            data = des.decrypt(des_key, data)
             #the final output should be saved in a byte array called rr_byte
             rr_byte=bytearray()
             #write to file to make sure it is okay

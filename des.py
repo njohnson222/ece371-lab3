@@ -110,7 +110,7 @@ SHIFT = [1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1]
 
 
 
-def string_to_bit_array(text):#Convert a string into a list of bits
+def string_to_bit_array(text): #Convert a string into a list of bits
     array = list()
     for char in text:
         binval = binvalue(char, 8)#Get the char value on one byte
