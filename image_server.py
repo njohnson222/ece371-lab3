@@ -9,7 +9,7 @@ from des import nsplit
 
 SERVER_IP    = gethostbyname( 'localhost' )
 PORT_NUMBER = 5000
-SIZE = 6800
+SIZE = 8192
 
 def send_ack(socket):
     socket.sendto("OKAY".encode(),(SERVER_IP,PORT_NUMBER)) #send key
@@ -19,6 +19,7 @@ hostName = gethostbyname( 'localhost' )
 
 mySocket = socket( AF_INET, SOCK_DGRAM )
 mySocket.bind( (hostName, PORT_NUMBER) )
+mySocket.settimeout(None)
 
 print ("Test server listening on port {0}\n".format(PORT_NUMBER))
 client_public_key=''
@@ -47,19 +48,18 @@ while True:
                 des_key += RSA.decrypt(public, int(num))
             print(f"DECRYPTED KEY: {des_key}")
 
-            time.sleep(3)
-
             # Receive encrypted image bytes from the client
-            (data,addr) = mySocket.recvfrom(SIZE)
-            print(len(data))
+            while True:
+                (data,addr) = mySocket.recvfrom(SIZE)
+                if data: break
 
-            cipher_chunks = nsplit(data, 8) # Split encrypted image into image_chunks
+            data = data.decode()
+            print(len(data))
+            print(data[0])
+            print(data[-1])
+
             coder = des.des()
-            plaintext_image = ""
-            plain_chunk = ""
-            for chunk in cipher_chunks:
-                plain_chunk = coder.run(des_key, plain_chunk, action=des.DECRYPT)
-                plaintext_image += plain_chunk
+            plaintext_image = coder.run(des_key, data, action=des.DECRYPT)
             print(len(plaintext_image))
 
 

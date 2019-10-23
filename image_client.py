@@ -68,15 +68,16 @@ coder = des.des()
 
 # Split image up into chunks of 8 bytes
 encrypted_image = ""
-image_chunks = nsplit(data, 8)
-i = 0
-for chunk in image_chunks:
-    # Encrypt the current chunk
-    ciphertext = coder.run(des_key, chunk, action=des.ENCRYPT)
-    encrypted_image += ciphertext
-    i+=1
-print(len(encrypted_image))
-mySocket.sendto(encrypted_image.encode('utf-8'), (SERVER_IP, PORT_NUMBER))
+ciphertext = coder.run(des_key, data, action=des.ENCRYPT)
+print(ciphertext[0])
+print(ciphertext[-1])
+print(len(ciphertext))
+print(ciphertext[0:10].encode())
+time.sleep(1)
+mySocket.sendto(encrypted_image[0:10].encode(), (SERVER_IP, PORT_NUMBER))
+# while True:
+#     mySocket.sendto("TEST MESSAGE".encode('utf-8'), (SERVER_IP, PORT_NUMBER))
+#     time.sleep(1)
 
 #r_byte=bytearray()
 
