@@ -56,6 +56,7 @@ mySocket.sendto(message.encode(),(SERVER_IP,PORT_NUMBER))
 #read image, encode, send the encoded image binary file
 file = open(r'penguin.jpg',"rb")
 data = file.read()
+print(len(data))
 file.close()
 
 ###################################your code goes here#####################################
@@ -63,16 +64,22 @@ file.close()
 #set cbc to False when performing encryption, you should use the des class
 #coder=des.des(), use bytearray to send the encryped image through network
 #r_byte is the final value you will send through socket
+coder = des.des()
 
 # Split image up into chunks of 8 bytes
-# image_chunks = nsplit(data, 8)
-# for chunk in image_chunks:
-#     # Send the current chunk
-#     mySocket.sendto(chunk,(SERVER_IP,PORT_NUMBER))
-mySocket.sendto(data, (SERVER_IP, PORT_NUMBER))
+encrypted_image = ""
+image_chunks = nsplit(data, 8)
+i = 0
+for chunk in image_chunks:
+    # Encrypt the current chunk
+    ciphertext = coder.run(des_key, chunk, action=des.ENCRYPT)
+    encrypted_image += ciphertext
+    i+=1
+print(len(encrypted_image))
+mySocket.sendto(encrypted_image.encode('utf-8'), (SERVER_IP, PORT_NUMBER))
 
-r_byte=bytearray()
+#r_byte=bytearray()
 
 #send image through socket
-mySocket.sendto(bytes(r_byte),(SERVER_IP,PORT_NUMBER))
+#mySocket.sendto(bytes(r_byte),(SERVER_IP,PORT_NUMBER))
 print('encrypted image sent!')

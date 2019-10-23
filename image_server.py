@@ -5,10 +5,11 @@ import struct
 import RSA
 import des
 import time
+from des import nsplit
 
 SERVER_IP    = gethostbyname( 'localhost' )
 PORT_NUMBER = 5000
-SIZE = 8192
+SIZE = 6800
 
 def send_ack(socket):
     socket.sendto("OKAY".encode(),(SERVER_IP,PORT_NUMBER)) #send key
@@ -46,9 +47,21 @@ while True:
                 des_key += RSA.decrypt(public, int(num))
             print(f"DECRYPTED KEY: {des_key}")
 
+            time.sleep(3)
+
             # Receive encrypted image bytes from the client
             (data,addr) = mySocket.recvfrom(SIZE)
-            print(data)
+            print(len(data))
+
+            cipher_chunks = nsplit(data, 8) # Split encrypted image into image_chunks
+            coder = des.des()
+            plaintext_image = ""
+            plain_chunk = ""
+            for chunk in cipher_chunks:
+                plain_chunk = coder.run(des_key, plain_chunk, action=des.DECRYPT)
+                plaintext_image += plain_chunk
+            print(len(plaintext_image))
+
 
             #decrypt the image
             ###################################your code goes here####################
@@ -60,7 +73,7 @@ while True:
             #rr_byte=bytearray()
             #write to file to make sure it is okay
             file2=open(r'penguin_decrypted.jpg',"wb")
-            file2.write(bytes(data))
+            file2.write(plaintext_image.encode())
             file2.close()
             print ('decypting image completed')
             break
