@@ -254,7 +254,7 @@ class des():
         ###################################your code goes here###################################
         #permute the block using the table! the table will be either PI or CP_1 or CP_2 (found in the beginning of this file!)
         #block is a bit array in integers [1,0,1,...], the output has the same format as block but with a permutation of the members
-        return [block[x-1] for x in table]
+        return [block[q-1] for q in table]
 
         # result = [0 for i in range(len(table))]
         # print(f"BLOCK LEN: {len(block)}")

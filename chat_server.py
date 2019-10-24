@@ -29,7 +29,7 @@ while True:
             ###################################your code goes here#####################################
             #data_decoded is the decoded character based on the received cipher, calculate it using functions in RSA.py
             data_decoded = decrypt(public, cipher)
-            print (f"{cipher}: {data_decoded}")
+            print ("%d: %s"%(cipher, data_decoded))
                 #python2: print data
 sys.ext()
 #What could I be doing wrong?
